@@ -17,7 +17,7 @@ class InvoiceRepo
 
   def find_by_id(invoice_id)
     @invoice_objects.detect do |invoice|
-      invoice.id == invoice_id
+      invoice.id == invoice_id.to_i
     end
   end
 

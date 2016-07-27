@@ -76,7 +76,7 @@ class ItemTest < Minitest::Test
   end
 
   def test_it_finds_the_merchant_it_belongs_to
-    binding.pry
+    # bindin  g.pry
     assert_kind_of Merchant, @item.merchant
   end
 
