@@ -46,7 +46,6 @@ class ItemTest < Minitest::Test
   end
 
   def test_gives_time_created
-
     time = "2016-01-11 09:34:06 UTC"
     item = Item.new({  id: '1',
       name: "Pencil",
@@ -67,7 +66,9 @@ class ItemTest < Minitest::Test
       created_at: time,
       updated_at: time,
       merchant_id: 1})
-      assert_equal time, item.updated_at.to_s
+
+      assert_equal item.convert_string_to_time(time), item.updated_at
+
   end
 
   def test_gives_owners_merchant_id
