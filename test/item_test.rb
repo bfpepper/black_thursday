@@ -66,7 +66,9 @@ class ItemTest < Minitest::Test
       created_at: time,
       updated_at: time,
       merchant_id: 1})
+
       assert_equal item.convert_string_to_time(time), item.updated_at
+
   end
 
   def test_gives_owners_merchant_id
