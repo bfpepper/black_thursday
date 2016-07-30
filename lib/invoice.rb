@@ -18,4 +18,11 @@ class Invoice
     @parent.find_merchant_by_id(self.merchant_id)
   end
 
+  def items
+    #collect a list of item_ids from invoice_item_objects
+    item_ids = @parent.find_item_ids_on_invoice(self.id)
+    #collect a list of items from item_ids
+    item_ids.map do |item_id|
+      @parent.find_item_by_id(item_id)
+    end
 end

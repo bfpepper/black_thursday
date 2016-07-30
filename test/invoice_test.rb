@@ -38,4 +38,12 @@ class InvoiceTest < Minitest::Test
     assert_equal time, Invoice.new(@hash).updated_at
   end
 
+  def test_it_can_find_the_merchant_related_to_this_invoice
+    mock_invoice_repo = Minitest::Mock.new
+    mock_invoice_repo.expect(:find_merchant_by_id, "merchant", [234567])
+    data = {id: "1", customer_id: "123456", merchant_id: "234567", status: "pending", created_at: "2009-12-09", updated_at: "2009-12-09"}
+    invoice = Invoice.new(data , mock_invoice_repo)
+    assert_equal "merchant", invoice.merchant
+    assert mock_invoice_repo.verify
+  end
 end

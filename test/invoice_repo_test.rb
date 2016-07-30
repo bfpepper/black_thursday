@@ -61,4 +61,12 @@ class InvoiceRepoTest < Minitest::Test
     assert_equal [], invoice_repo.find_all_by_status("pend")
   end
 
+  def test_it_can_find_a_merchant_which_owns_an_invoice
+    filepath = "./data/support/invoices_support.csv"
+    mock_se = Minitest::Mock.new
+    mock_se.expect(:find_merchant_by_id, "merchant", ["merchant_id"])
+    invoice_repo = InvoiceRepo.new(filepath, mock_se)
+    assert_equal "merchant", invoice_repo.find_merchant_by_id("merchant_id")
+    assert mock_se.verify
+  end
 end
