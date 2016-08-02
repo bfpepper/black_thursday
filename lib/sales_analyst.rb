@@ -211,8 +211,8 @@ class SalesAnalyst
   end
 
   def most_sold_item_for_merchant(merchant_id)
-    paid_invoice_items = paid_invoice_items_for_merchant(merchant_id)
     items_by_merchant = item_repo.find_all_by_merchant_id(merchant_id)
+    paid_invoice_items = paid_invoice_items_for_merchant(merchant_id)
 
     grouped_items = items_by_merchant.group_by do |item|
       paid_invoice_items.reduce(0) do |total, invoice_item|
@@ -235,7 +235,7 @@ class SalesAnalyst
         revenue
       end
     end
-    grouped_items.first
+    grouped_items.reverse
   end
 
   def paid_invoice_items_for_merchant(merchant_id)
