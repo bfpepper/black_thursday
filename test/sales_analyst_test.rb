@@ -9,7 +9,8 @@ class SalesAnalystTest < Minitest::Test
       merchants: "./data/support/merchant_support.csv",
       invoices: "./data/support/invoices_support.csv",
       transactions: "./data/support/transactions_support.csv",
-      invoice_items: "./data/support/invoice_items_support.csv"
+      invoice_items: "./data/support/invoice_items_support.csv",
+      customers: "./data/support/customer_support.csv"
       })
     @sa = SalesAnalyst.new(@se)
   end
@@ -94,4 +95,17 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 263441173, SalesAnalyst.new(@se).most_sold_item_for_merchant(12335150).first.id
   end
 
+  def test_it_can_find_top_revenue_items_for_given_merchant
+    assert_equal 263405857, SalesAnalyst.new(@se).best_item_for_merchant(12335150).id
+  end
+
+  def test_it_can_find_customers_who_return_a_lot
+    se = SalesEngine.from_csv({merchants: "./data/support/merchant_support.csv",
+      items: "./data/support/items_support.csv",
+      invoices: "./data/support/invoices_support.csv",
+      invoice_items: "./data/support/invoice_items_support.csv",
+      customers: "./data/customers.csv"
+      })
+    assert_equal 983, SalesAnalyst.new(se).customer_with_most_returns.first.id
+  end
 end
