@@ -253,22 +253,26 @@ class SalesAnalyst
     end
   end
 
-
   def customer_with_most_returns
-    invoices_with_returns = se.invoices.find_all_by_status(:returned)
-    customers_with_returns = invoices_with_returns.map do |invoice|
-      invoice.customer
-    end.uniq
+    invoiced_returned = se.invoices.find_all_by_status(:returned)
+    customers_who_return = customer_returns(invoiced_returned)
+    grouped_customers = grouped_returns(customers_who_return, invoiced_returned)
+    grouped_customers[grouped_customers.keys.max]
+  end
 
-    grouped_customers = customers_with_returns.group_by do |customer|
-      invoices_with_returns.reduce(0) do |returns, invoice|
+  def grouped_returns(customers_who_return, invoiced_returned)
+    customers_who_return.group_by do |customer|
+      invoiced_returned.reduce(0) do |returns, invoice|
         returns += 1 if invoice.customer_id == customer.id
         returns
       end
     end
-
-    grouped_customers[grouped_customers.keys.max]
   end
 
+  def customer_returns(invoiced_returned)
+    invoiced_returned.map do |invoice|
+      invoice.customer
+    end.uniq
+  end
 
 end
